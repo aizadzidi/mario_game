@@ -1,0 +1,6 @@
+Build me a simple side-scrolling Mario-style 
+game using HTML, CSS, and JavaScript. 
+Start with a character that moves left and 
+right with arrow keys and can jump with 
+spacebar. 
+Add a platform to stand on.
