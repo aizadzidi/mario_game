@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario-Style Adventure</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Main Menu -->
+        <div id="mainMenu" class="menu-screen">
+            <h1 class="game-title">Mario-Style Adventure</h1>
+            <div class="menu-buttons">
+                <button id="playButton" class="menu-btn">Play Game</button>
+                <button id="levelSelectButton" class="menu-btn">Level Select</button>
+                <button id="instructionsButton" class="menu-btn">Instructions</button>
+            </div>
+        </div>
+
+        <!-- Level Select Screen -->
+        <div id="levelSelect" class="menu-screen hidden">
+            <h2>Select Level</h2>
+            <div class="level-grid">
+                <div class="level-card" data-level="1">
+                    <div class="level-number">1</div>
+                    <div class="level-name">Tutorial</div>
+                    <div class="level-stars">★★★</div>
+                </div>
+                <div class="level-card" data-level="2">
+                    <div class="level-number">2</div>
+                    <div class="level-name">Forest</div>
+                    <div class="level-stars">★★★</div>
+                </div>
+                <div class="level-card" data-level="3">
+                    <div class="level-number">3</div>
+                    <div class="level-name">Cave</div>
+                    <div class="level-stars">★★★</div>
+                </div>
+                <div class="level-card" data-level="4">
+                    <div class="level-number">4</div>
+                    <div class="level-name">Castle</div>
+                    <div class="level-stars">★★★</div>
+                </div>
+            </div>
+            <button id="backToMenu" class="menu-btn">Back to Menu</button>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions" class="menu-screen hidden">
+            <h2>How to Play</h2>
+            <div class="instructions-content">
+                <div class="instruction-item">
+                    <span class="key">← →</span>
+                    <span class="description">Move left and right</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="key">SPACE</span>
+                    <span class="description">Jump</span>
+                </div>
+                <div class="instruction-item">
+                    <span class="key">ESC</span>
+                    <span class="description">Pause game</span>
+                </div>
+                <div class="game-objective">
+                    <h3>Objective:</h3>
+                    <p>Collect all coins while avoiding enemies. Complete each level to unlock the next!</p>
+                </div>
+            </div>
+            <button id="backToMenu2" class="menu-btn">Back to Menu</button>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-screen hidden">
+            <div class="game-header">
+                <div class="game-info">
+                    <div class="score-display">
+                        <span class="score-label">Score:</span>
+                        <span id="scoreValue" class="score-value">0</span>
+                    </div>
+                    <div class="level-display">
+                        <span class="level-label">Level:</span>
+                        <span id="levelValue" class="level-value">1</span>
+                    </div>
+                    <div class="coins-display">
+                        <span class="coins-label">Coins:</span>
+                        <span id="coinsValue" class="coins-value">0/5</span>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="pauseButton" class="control-btn">⏸️</button>
+                    <button id="restartButton" class="control-btn">🔄</button>
+                    <button id="menuButton" class="control-btn">🏠</button>
+                </div>
+            </div>
+            
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            
+            <!-- Pause Menu -->
+            <div id="pauseMenu" class="pause-menu hidden">
+                <h2>Game Paused</h2>
+                <button id="resumeButton" class="menu-btn">Resume</button>
+                <button id="restartLevelButton" class="menu-btn">Restart Level</button>
+                <button id="quitToMenuButton" class="menu-btn">Quit to Menu</button>
+            </div>
+
+            <!-- Level Complete Screen -->
+            <div id="levelComplete" class="level-complete hidden">
+                <h2>Level Complete!</h2>
+                <div class="completion-stats">
+                    <div class="stat">
+                        <span class="stat-label">Score:</span>
+                        <span id="finalScore" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Coins:</span>
+                        <span id="finalCoins" class="stat-value">0/5</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Stars:</span>
+                        <span id="finalStars" class="stat-value">★★★</span>
+                    </div>
+                </div>
+                <div class="completion-buttons">
+                    <button id="nextLevelButton" class="menu-btn">Next Level</button>
+                    <button id="replayLevelButton" class="menu-btn">Replay</button>
+                    <button id="levelSelectFromComplete" class="menu-btn">Level Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="coinSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+    <audio id="jumpSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+    <audio id="enemySound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+    <audio id="levelCompleteSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+
+    <script src="main.js"></script>
+</body>
+</html>
